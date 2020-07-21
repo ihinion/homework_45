@@ -12,3 +12,24 @@ def index_view(request):
         options.append(option)
     context = {'tasks': tasks, 'options': options}
     return render(request, 'index.html', context)
+
+
+def task_create_view(request):
+    options = []
+    if request.method == 'GET':
+        for i in STATUS_CHOICES:
+            option = {i[0]: i[1]}
+            options.append(option)
+        context = {
+            'options': options
+        }
+        return render(request, 'add.html', context)
+    elif request.method == 'POST':
+        description = request.POST.get('description')
+        status = request.POST.get('status')
+        finish_date = request.POST.get('finish_date')
+        if finish_date:
+            Task.objects.create(description=description, status=status, finish_date=finish_date)
+        else:
+            Task.objects.create(description=description, status=status)
+        return redirect(index_view)
