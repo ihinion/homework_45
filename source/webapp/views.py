@@ -1,6 +1,5 @@
-from django.shortcuts import render
 from webapp.models import Task
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404, render, HttpResponseRedirect
 from webapp.models import STATUS_CHOICES
 
 
@@ -27,3 +26,13 @@ def task_create_view(request):
         else:
             Task.objects.create(description=description, status=status)
         return redirect(index_view)
+
+
+def delete_view(request, id):
+    context = {}
+    obj = get_object_or_404(Task, id=id)
+
+    if request.method == "POST":
+        obj.delete()
+        return HttpResponseRedirect("/")
+    return render(request, "delete_view.html", context)

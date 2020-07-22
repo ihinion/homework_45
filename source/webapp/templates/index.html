@@ -27,8 +27,13 @@
               <div class="card-body">
                 <h5 class="card-title font-weight-bold">Task #{{ task.pk }}</h5>
                   <p class="text-justify">Description: {{ task.description }}</p>
+                  <form method="POST" action="{{ task.pk }}/delete/">
+               {% csrf_token %}
+                <button class="btn btn-primary btn-sm" type="submit" value="DELETE">Delete</button>
+            </form>
               </div>
             </div>
+
         {% endfor %}
         <a class="btn btn-primary btn-lg btn-block mb-4" href="add/" role="button">Add</a>
     </div>
