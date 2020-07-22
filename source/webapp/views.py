@@ -6,20 +6,14 @@ from webapp.models import STATUS_CHOICES
 
 def index_view(request):
     tasks = Task.objects.all()
-    options = []
-    for i in STATUS_CHOICES:
-        option = {i[0]: i[1]}
-        options.append(option)
+    options = STATUS_CHOICES
     context = {'tasks': tasks, 'options': options}
     return render(request, 'index.html', context)
 
 
 def task_create_view(request):
-    options = []
+    options = STATUS_CHOICES
     if request.method == 'GET':
-        for i in STATUS_CHOICES:
-            option = {i[0]: i[1]}
-            options.append(option)
         context = {
             'options': options
         }
