@@ -5,18 +5,13 @@ from webapp.models import STATUS_CHOICES
 
 def index_view(request):
     tasks = Task.objects.all()
-    options = STATUS_CHOICES
-    context = {'tasks': tasks, 'options': options}
-    return render(request, 'index.html', context)
+    return render(request, 'index.html', {'tasks': tasks})
 
 
 def task_create_view(request):
     options = STATUS_CHOICES
     if request.method == 'GET':
-        context = {
-            'options': options
-        }
-        return render(request, 'add.html', context)
+        return render(request, 'add.html', {'options': options})
     elif request.method == 'POST':
         description = request.POST.get('description')
         status = request.POST.get('status')
